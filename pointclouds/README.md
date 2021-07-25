@@ -1,0 +1,1 @@
+Please download the data pack for point cloud files from https://drive.google.com/file/d/1vlizjHpdsFoJ0GUeYk1hCmd6r0xBUlKp/view?usp=sharing. After downloading, unzip the "UW_Campus" folder to this directory.

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<title>Potree Viewer</title>
+
+	<link rel="stylesheet" type="text/css" href="libs/potree/potree.css">
+	<link rel="stylesheet" type="text/css" href="libs/jquery-ui/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="libs/perfect-scrollbar/css/perfect-scrollbar.css">
+	<link rel="stylesheet" type="text/css" href="libs/openlayers3/ol.css">
+	<link rel="stylesheet" type="text/css" href="libs/spectrum/spectrum.css">
+	<link rel="stylesheet" type="text/css" href="libs/jstree/themes/mixed/style.css">
+</head>
+
+<body>
+	<script src="libs/jquery/jquery-3.1.1.min.js"></script>
+	<script src="libs/spectrum/spectrum.js"></script>
+	<script src="libs/jquery-ui/jquery-ui.min.js"></script>
+	<script src="libs/three.js/build/three.min.js"></script>
+  <script src="libs/three.js/extra/lines.js"></script>
+	<script src="libs/other/BinaryHeap.js"></script>
+	<script src="libs/tween/tween.min.js"></script>
+	<script src="libs/d3/d3.js"></script>
+	<script src="libs/proj4/proj4.js"></script>
+	<script src="libs/openlayers3/ol.js"></script>
+	<script src="libs/i18next/i18next.js"></script>
+	<script src="libs/jstree/jstree.js"></script>
+	<script src="libs/potree/potree.js"></script>
+	<script src="libs/plasio/js/laslaz.js"></script>
+
+
+
+	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
+		<div class="btn-group" style="position: absolute; z-index: 2;">
+			<button onclick="recenter()">Re-Center</button>
+			<button onclick="low_pt_budget()">Low Resolution</button>
+			<button onclick="medium_pt_budget()">Medium Resolution</button>
+			<button onclick="high_pt_budget()">High Resolution</button>
+		</div>
+		<div id="potree_render_area"></div>
+		<div id="potree_sidebar_container"> </div>
+	</div>
+
+
+	<script>
+		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
+
+		viewer.setEDLEnabled(true);
+		viewer.setFOV(60);
+		viewer.setPointBudget(1 * 1000 * 100);
+		document.title = "";
+		viewer.setEDLEnabled(false);
+		viewer.setBackground("gradient"); // ["skybox", "gradient", "black", "white"];
+		viewer.setDescription(``);
+		viewer.loadSettingsFromURL();
+		viewer.useHQ = true; // use high quality splat
+
+		viewer.loadGUI(() => {
+			viewer.setLanguage('en');
+			$("#menu_appearance").next().show();
+			$("#menu_tools").next().show();
+			$("#menu_scene").next().show();
+			viewer.toggleSidebar();
+		});
+
+		let sceneSG = new Potree.Scene();
+		viewer.setScene(sceneSG);
+
+		Potree.loadPointCloud("pointclouds/UW_Campus/cloud.js", "UW_Campus", e => {
+			sceneSG.addPointCloud(e.pointcloud);
+			sceneSG.view.position.set(47.481, 27.303, 3.514);
+			sceneSG.view.lookAt(new THREE.Vector3(20.753, 11.667, 6.935));
+
+			let material = e.pointcloud.material;
+			//material.pointColorType = Potree.PointColorType.RGB; // any Potree.PointColorType.XXXX
+			material.size = 1;
+			material.pointSizeType = Potree.PointSizeType.ADAPTIVE;
+			material.shape = Potree.PointShape.SQUARE;
+
+
+			// annotations
+
+			// Anderson Hall
+			{
+				{
+					let elTitle = $(`
+						<span>Anderson Hall</span>
+					`);
+					// elTitle.find("img[name=action_set_scene]").click((event) => {
+					// 	event.stopPropagation();
+					// 	viewer.setScene(sceneLion);
+					// });
+					elTitle.toString = () => "Anderson Hall";
+
+					let and_hall = new Potree.Annotation({
+						position: [28.960, 1.340, 4.171],
+						title: elTitle,
+						cameraPosition: [16.735, 30.486, 3.485],
+						cameraTarget: [29.124, 4.296, 4.423],
+						description: `Anderson Hall is an “H” shape composition in plan with the primary axis parallel to Stevens
+Way and perpendicular flanking wings at each end which housed the large classrooms
+and reading room. The building is four stories, including a ground floor accessed from the
+south with a large, steeply sloped slate shingled roof and cross gable roofs at each end
+wing. The major interior spaces are the Auditorium and the Club Room, located in the two wings
+of the building. These both feature double-height spaces with timber vaulting and large
+twenty-foot high windows facing north.<br></br><a href="https://facilities.uw.edu/files/media/uw-anderson-hall-hra-final-02-27-2014.pdf">Referencelink</a>`
+					});
+
+					sceneSG.annotations.add(and_hall);
+				}
+
+
+				// Winkenwerder Forest Sciences Laboratory
+				{
+					let wfs_hall = new Potree.Annotation({
+						position: [69.347, -20.668, 4.144],
+						cameraPosition: [48.144, -18.489, -1.583],
+						cameraTarget: [67.554, -23.281, 1.823],
+						title: "Winkenwerder Forest Sciences Laboratory",
+						description: `
+					The Hugo Winkenwerder Forest Sciences Laboratory was completed in 1963，after its completion in 1963, it was named for the Forestry Department's second Dean, Hugh A. Winkenwerder (1878-1947), a graduate of the pioneering Yale Forest School, and called the "Winkenwerder Forest Sciences Laboratory;" finally, in 1972, the building's name was shortened to "Winkenwerder Hall." It remains one of the best examples of non-residential Regional Modern architecture in the Puget Sound region. WInkenwerder Hall won an Award of Merit from the American Institute of Architects (AIA) in 1966, one of nine awarded that year.<br><br><a href="http://pcad.lib.washington.edu/building/7318/">Referencelink</a>`
+					});
+					sceneSG.annotations.add(wfs_hall);
+				}
+
+				// Bloedal Hall
+				{
+					let bld_hall = new Potree.Annotation({
+						position: [4.286, -46.089, 6.392],
+						cameraPosition: [15.785, -16.873, -0.772],
+						cameraTarget: [12.691, -29.520, 1.783],
+						title: "Bloedel Hall",
+						description: `
+						This building, with its virtuosic wood framing, echoed that of nearby Winkenwerder Hall, also designed by Grant, Copeland and Chervenak in 1963. Originally named the Forest Sciences Building, it was renamed Bloedel Hall for Julius H. Bloedel (1864-1957), founder of the MacMillan Bloedel Limited forest products company. Richard Haag and Associates, Landscape Architects, designed the courtyard formed among Bloedel, Winkenwerder and Anderson Halls. This courtyard had some paving and benches and providing a delightful, sheltered venue for outdoor gatherings or solitary moments. This courtyard remains one of the finest outdoor living spaces on the UW Campus.<br><br><a href="http://pcad.lib.washington.edu/building/8744/">Referencelink</a>`
+					});
+					sceneSG.annotations.add(bld_hall);
+				}
+
+				// Stevens Way
+				{
+					let stevens_way = new Potree.Annotation({
+						position: [21.627, 31.153, 1.753],
+						cameraPosition: [-22.471, 37.657, 3.982],
+						cameraTarget: [39.327, 24.035, 6.030],
+						title: "Stevens Way",
+						description: `
+						Stevens Way & Garfield Ln Bus Stop<br></br>
+					Buses at this location:31,32,67,75,78,372,810,821,855,860,871,880
+						`
+					});
+					sceneSG.annotations.add(stevens_way);
+				}
+
+			}
+		});
+
+		function recenter() {
+			sceneSG.view.position.set(2.509, 44.291, 29.728);
+			sceneSG.view.lookAt(new THREE.Vector3(23.181, 9.231, 9.172));
+		}
+
+		function low_pt_budget() {
+			viewer.setPointBudget(1 * 1000 * 500);
+		}
+
+		function medium_pt_budget() {
+			viewer.setPointBudget(1 * 1000 * 1000);
+		}
+
+		function high_pt_budget() {
+			viewer.setPointBudget(1 * 1000 * 10000);
+		}
+	</script>
+
+	<script>
+
+	const animation = new Potree.CameraAnimation(viewer);
+
+
+	const positions = [
+		[47.481, 27.303, 3.514],
+		[25.144, 35.535, 2.185],
+		[8.725, 34.009, 3.281],
+		[-16.350, 35.708, 3.737],
+		[-25.479, 11.927, 7.238],
+		[-21.502, -22.138, 1.889],
+		[-2.391, -23.306, -1.973],
+		[15.973, -15.933, -0.622],
+		[31.037, -20.853, -1.046],
+		[44.134, -20.410, -1.638],
+		[51.017, -20.730, -1.771]
+	];
+
+	const targets = [
+		[26.981, 11.379, 5.743],
+		[26.981, 11.379, 5.743],
+		[26.981, 11.379, 5.743],
+		[26.981, 11.379, 5.743],
+		[26.981, 11.379, 5.743],
+		[3.977, -22.228, -1.239],
+		[3.977, -22.228, -1.239],
+		[7.455, -51.119, 4.993],
+		[35.336, -33.184, 0.138],
+		[44.382, -20.435, -1.595],
+		[51.308, -20.705, -1.679]
+	];
+
+	for(let i = 0; i < positions.length; i++){
+		const cp = animation.createControlPoint();
+
+		cp.position.set(...positions[i]);
+		cp.target.set(...targets[i]);
+	}
+
+	animation.visible = true;
+	animation.duration = 25;
+	sceneSG.addCameraAnimation(animation);
+
+
+</script>
+
+
+
+</html>

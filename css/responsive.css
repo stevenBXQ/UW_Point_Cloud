@@ -1,0 +1,130 @@
+/*
+Author: Brian Ho
+*/
+
+/* Monitor */
+@media only screen and (max-width:1280px){
+    #potree_map{
+    padding-top:4em;
+    padding-bottom:1em;
+    }
+
+    #potree_intro{
+        padding-top: 4em;
+        padding-bottom:2em;
+    }
+    .introContent h5{
+        font-size: 18px;
+    }
+    .introContent h6{
+        font-size: 16px;
+    }
+
+
+    
+}
+
+/* Macbook */
+@media only screen and (max-width:1024px){
+    #potree_map{
+        width:100%;
+    }
+
+    .introContent{
+        width:70%;
+    }
+
+}
+
+/* Iphone X */
+@media only screen and (max-width: 812px){
+    #thumbnail{
+        justify-content: flex-start;
+        padding-top: 4em;
+    }
+    #thumbnail h1{
+        font-size: 40px;
+    }
+    path{
+        width:250;
+    }
+    #thumbnail h2{
+        font-size: 32px;
+    }
+    .arrow{
+        top:45%;
+    }
+    .MapContent{
+        flex-wrap: wrap;
+    }
+
+    .MapContent .mapbox {
+        width:60%;
+        margin-bottom: 20px;
+    }
+    
+    .introContent {
+        width:90%;
+    }
+
+
+
+
+}
+
+@media only screen and (max-width:768px){
+    #thumbnail{
+        justify-content: center;
+    }
+    .arrow{
+        top:65%;
+    }
+}
+
+@media only screen and (max-width:736px){
+    #thumbnail{
+        justify-content: center;
+    }
+
+    .arrow{
+        top:45%;
+    }
+}
+/* Iphone vertical */
+@media only screen and (max-width:414px){
+    #thumbnail{
+        justify-content: center;
+        padding-top: 0em;
+    }
+    .arrow{
+        top:60%;
+    }
+
+    .MapContent .mapbox{
+        height:500px
+    }
+
+
+    .introContent{
+        width:100%;
+    }
+
+    .introContent h5{
+        font-size: 15px;
+    }
+
+    .introContent h6{
+        font-size: 14px;
+    }
+
+
+
+}
+
+@media only screen and (max-width: 375px){
+    .MapContent .mapbox{
+        width:90%;
+    }
+
+}
+

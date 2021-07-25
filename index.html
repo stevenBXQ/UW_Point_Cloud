@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>University of Washington Virtual Tour</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/responsive.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Oxygen|Pattaya" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans+Narrow:wght@700&display=swap" rel="stylesheet">
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <nav class="topnav" id="myTopnav">
+        <a onclick="ChangeView('thumbnail')" class="navbar-brand">Home</a>
+        <a class="links" onclick="ChangeView('potree_intro')">Introduction</a>
+        <a class="links" onclick="ChangeView('potree_map')">Point Cloud</a>
+        <a class="links" onclick="ChangeView('Contact')">Contact Us</a>
+        <a class="icon" href="javascript:void(0);" class="icon" onclick="responsivenav()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </nav>
+    <div id="thumbnail">
+        <h2>Weclome to the
+        </h2>
+        <h1>
+            University of Washington
+
+        </h1>
+        <h2>Point Cloud System
+        </h2>
+        <span onclick="ChangeView('potree_intro')" class="arrow">Learn More</span>
+    </div>
+    <div id="potree_intro">
+        <h2 style="text-align:center">Project Introduction</h2>
+        <div class="introContent">
+            <hr>
+            <p>The project uses point cloud virtualization to provide a new travel experience. It mainly shows the buildings
+                of the School of Environmental and Forest Sciences. The three parts of the campus of the University of Washington
+                Forestry Department are Anderson Hall, Winkenwerder Hall, and Bloedel Hall. The view can be adjusted to various
+                angles to achieve the most immersive experience.</p>
+            <a href="general.html"><button type="button" class="btn btn-deep-purple">Enter</button></a>
+        </div>
+    </div>
+    <div id="potree_map">
+        <h2 style="color:black">Point Cloud Map</h2>
+        <div class="MapContent">
+            <div class="mapbox">
+                <h3>Anderson Hall</h3>
+                <hr>
+                <ul>
+                    <li>Dates: constructed 1924-1925</li>
+                    <li>Designers: Bebb and Gould, Architects; Charles Herbert Bebb; Carl Freylinghausen Gould Sr.</li>
+                    <li>Donor: Mrs A.H. Anderson</li>
+                    <li>Interior Features: an auditorium, exhibition and clubroom and a reading room</li>
+                </ul>
+                <a href="and.html"><button type="button" class="btn btn-deep-purple">Enter</button></a>
+                <!-- <button type="button" class="btn btn-deep-purple">Enter</button> -->
+            </div>
+            <div class="mapbox">
+                <h3>Bloedel Hall</h3>
+                <hr>
+                <ul>
+                    <li>Dates: constructed 1970-1971</li>
+                    <li>Designers: Robert Allan Chervenak; Ross W. Copeland Jr.; Austin Grant; Richard Haag</li>
+                    <li>Richard Haag and Associates, Landscape Architects, designed the courtyard formed among Bloedel, Winkenwerder and Anderson Halls. </li>
+                </ul>
+                <a href="bld.html"><button type="button" class="btn btn-deep-purple">Enter</button></a>
+            </div>
+            <div class="mapbox">
+                <h3>Winkenwerder Forest Sciences Laboratory</h3>
+                <hr>
+                <ul>
+                    <li>Dates: constructed 1962-1963</li>
+                    <li>Designers: Robert Allan Chervenak; Ross W. Copeland Jr.; Harvey Dodd; Austin Grant</li>
+                    <li>Award: Merit from the American Institute of Architects (AIA) in 1966</li>
+                </ul>
+                <a href="wfs.html"><button type="button" class="btn btn-deep-purple">Enter</button></a>
+
+            </div>
+        </div>
+    </div>
+    <footer id="Contact">
+        <h2 style="text-align:center;">Contact US</h2>
+        <div class="ourinfo">
+            <div class="us">
+                <p>Team member:</p>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/xb297/">Steven Bao</a></li>
+                    <li><a href="https://www.linkedin.com/in/brianbho/">Brian Ho</a></li>
+                    <li><a href="https://lolakang.github.io">Lola Kang</a></li>
+                </ul>
+            </div>
+            <div class="InfoLinks">
+                <p>Project Link:</p>
+                <a href="https://github.com/whichsteven/UW_Point_Cloud"><img src="images/github.png " alt=" "></a>
+            </div>
+        </div>
+        <p style="margin-bottom:0px; text-align:center;">The point cloud visualization is supported by <a href="https://github.com/potree/potree/">Potree</a></p>
+        <p style="margin-bottom:0px; text-align:center;">The lidar data is collected by <a href="https://sites.uw.edu/rsgal">Jonathan Batchelor from the Remote Sensing & Geospatial Analysis Laboratory</a> at the University of Washington</p>
+        <p style="margin-bottom:0px; text-align:center;">Thank <a href="https://hgis.uw.edu/">the HGIS Lab at UW-Seattle</a> for the assistance in creating this portal</p>
+
+    </footer>
+    <script src="https://unpkg.com/aos@next/dist/aos.js "></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.js " integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="
+                    anonymous "></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js " integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49
+                    " crossorigin="anonymous "></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js " integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy
+                    " crossorigin="anonymous "></script>
+
+</html>

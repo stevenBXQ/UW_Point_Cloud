@@ -1,0 +1,1 @@
+/pointclouds/UW_Campus/data/r/** filter=lfs diff=lfs merge=lfs -text
